@@ -1,5 +1,5 @@
 {
-  "name": "vat-sense",
+  "name": "vatsense",
   "version": "0.0.1",
   "description": "The official TypeScript library for the Vat Sense API",
   "author": "Vat Sense <support@vatsense.com>",

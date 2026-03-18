@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import VatSense from 'vat-sense';
+import VatSense from 'vatsense';
 
 const client = new VatSense({
   username: 'My Username',
