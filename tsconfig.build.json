@@ -5,8 +5,8 @@
   "compilerOptions": {
     "rootDir": "./dist/src",
     "paths": {
-      "vatsense/*": ["./dist/src/*"],
-      "vatsense": ["./dist/src/index.ts"]
+      "vat-sense/*": ["./dist/src/*"],
+      "vat-sense": ["./dist/src/index.ts"]
     },
     "noEmit": false,
     "declaration": true,

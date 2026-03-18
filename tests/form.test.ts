@@ -1,5 +1,5 @@
-import { multipartFormRequestOptions, createForm } from 'vatsense/internal/uploads';
-import { toFile } from 'vatsense/core/uploads';
+import { multipartFormRequestOptions, createForm } from 'vat-sense/internal/uploads';
+import { toFile } from 'vat-sense/core/uploads';
 
 describe('form data validation', () => {
   test('valid values do not error', async () => {
