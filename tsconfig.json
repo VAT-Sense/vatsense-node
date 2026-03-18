@@ -8,8 +8,8 @@
     "moduleResolution": "node",
     "esModuleInterop": true,
     "paths": {
-      "vat-sense/*": ["./src/*"],
-      "vat-sense": ["./src/index.ts"]
+      "vatsense/*": ["./src/*"],
+      "vatsense": ["./src/index.ts"]
     },
     "noEmit": true,
 

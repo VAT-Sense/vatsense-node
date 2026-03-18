@@ -1,4 +1,4 @@
-import { createPathTagFunction, encodeURIPath } from 'vat-sense/internal/utils/path';
+import { createPathTagFunction, encodeURIPath } from 'vatsense/internal/utils/path';
 import { inspect } from 'node:util';
 import { runInNewContext } from 'node:vm';
 
