@@ -55,12 +55,12 @@ $ cd vatsense-node
 # With yarn
 $ yarn link
 $ cd ../my-package
-$ yarn link vatsense
+$ yarn link vat-sense
 
 # With pnpm
 $ pnpm link --global
 $ cd ../my-package
-$ pnpm link --global vatsense
+$ pnpm link --global vat-sense
 ```
 
 ## Running tests

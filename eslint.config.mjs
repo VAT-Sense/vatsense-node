@@ -25,7 +25,7 @@ export default tseslint.config(
         {
           patterns: [
             {
-              regex: '^vatsense(/.*)?',
+              regex: '^vat-sense(/.*)?',
               message: 'Use a relative import, not a package import.',
             },
           ],

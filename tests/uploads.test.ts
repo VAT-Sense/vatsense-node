@@ -1,6 +1,6 @@
 import fs from 'fs';
-import type { ResponseLike } from 'vatsense/internal/to-file';
-import { toFile } from 'vatsense/core/uploads';
+import type { ResponseLike } from 'vat-sense/internal/to-file';
+import { toFile } from 'vat-sense/core/uploads';
 import { File } from 'node:buffer';
 
 class MyClass {
@@ -97,7 +97,7 @@ describe('missing File error message', () => {
   });
 
   test('is thrown', async () => {
-    const uploads = await import('vatsense/core/uploads');
+    const uploads = await import('vat-sense/core/uploads');
     await expect(
       uploads.toFile(mockResponse({ url: 'https://example.com/my/audio.mp3' })),
     ).rejects.toMatchInlineSnapshot(
