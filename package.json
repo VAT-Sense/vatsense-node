@@ -1,6 +1,6 @@
 {
-  "name": "vatsense",
-  "version": "0.0.3",
+  "name": "vat-sense",
+  "version": "0.1.0",
   "description": "The official TypeScript library for the Vat Sense API",
   "author": "Vat Sense <support@vatsense.com>",
   "types": "dist/index.d.ts",
