@@ -22,10 +22,7 @@ export class Validate extends APIResource {
    *
    * Provide either `vat_number` or `eori_number`, but not both.
    */
-  check(
-    query: ValidateCheckParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<ValidateCheckResponse> {
+  check(query: ValidateCheckParams | null | undefined = {}, options?: RequestOptions): APIPromise<ValidateCheckResponse> {
     return this._client.get('/validate', { query, ...options });
   }
 }
@@ -110,6 +107,6 @@ export interface ValidateCheckParams {
 export declare namespace Validate {
   export {
     type ValidateCheckResponse as ValidateCheckResponse,
-    type ValidateCheckParams as ValidateCheckParams,
+    type ValidateCheckParams as ValidateCheckParams
   };
 }

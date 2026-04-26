@@ -50,5 +50,7 @@ export namespace UsageRetrieveResponse {
 }
 
 export declare namespace Usage {
-  export { type UsageRetrieveResponse as UsageRetrieveResponse };
+  export {
+    type UsageRetrieveResponse as UsageRetrieveResponse
+  };
 }

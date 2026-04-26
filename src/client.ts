@@ -17,67 +17,19 @@ import * as Errors from './core/error';
 import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
-import {
-  Countries,
-  Country,
-  CountryListParams,
-  CountryListProvincesParams,
-  CountryListProvincesResponse,
-  CountryListResponse,
-} from './resources/countries';
-import {
-  Currency,
-  CurrencyCalculateVatPriceParams,
-  CurrencyCalculateVatPriceResponse,
-  CurrencyConvertParams,
-  CurrencyConvertResponse,
-  CurrencyListParams,
-  CurrencyListResponse,
-  VatPrice,
-} from './resources/currency';
-import {
-  FindRate,
-  Rate,
-  RateCalculatePriceParams,
-  RateCalculatePriceResponse,
-  RateDetailsParams,
-  RateFindParams,
-  RateListParams,
-  RateListResponse,
-  RateListTypesResponse,
-  RateWithTaxRate,
-  Rates,
-  TaxRate,
-} from './resources/rates';
+import { Countries, Country, CountryListParams, CountryListProvincesParams, CountryListProvincesResponse, CountryListResponse } from './resources/countries';
+import { Currency, CurrencyCalculateVatPriceParams, CurrencyCalculateVatPriceResponse, CurrencyConvertParams, CurrencyConvertResponse, CurrencyListParams, CurrencyListResponse, VatPrice } from './resources/currency';
+import { FindRate, Rate, RateCalculatePriceParams, RateCalculatePriceResponse, RateDetailsParams, RateFindParams, RateListParams, RateListResponse, RateListTypesResponse, RateWithTaxRate, Rates, TaxRate } from './resources/rates';
 import { Sandbox, SandboxGenerateKeyResponse } from './resources/sandbox';
 import { Usage, UsageRetrieveResponse } from './resources/usage';
 import { Validate, ValidateCheckParams, ValidateCheckResponse } from './resources/validate';
-import {
-  CreateInvoice,
-  Invoice,
-  InvoiceBusinessInput,
-  InvoiceConversionInput,
-  InvoiceCreateParams,
-  InvoiceCustomerInput,
-  InvoiceDeleteResponse,
-  InvoiceListParams,
-  InvoiceListResponse,
-  InvoiceResource,
-  InvoiceResponse,
-  InvoiceUpdateParams,
-} from './resources/invoice/invoice';
+import { CreateInvoice, Invoice, InvoiceBusinessInput, InvoiceConversionInput, InvoiceCreateParams, InvoiceCustomerInput, InvoiceDeleteResponse, InvoiceListParams, InvoiceListResponse, InvoiceResource, InvoiceResponse, InvoiceUpdateParams } from './resources/invoice/invoice';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
 import { toBase64 } from './internal/utils/base64';
 import { readEnv } from './internal/utils/env';
-import {
-  type LogLevel,
-  type Logger,
-  formatRequestDetails,
-  loggerFor,
-  parseLogLevel,
-} from './internal/utils/log';
+import { type LogLevel, type Logger, formatRequestDetails, loggerFor, parseLogLevel } from './internal/utils/log';
 import { isEmptyObj } from './internal/utils/values';
 
 export interface ClientOptions {
@@ -163,7 +115,7 @@ export interface ClientOptions {
 }
 
 /**
- * API Client for interfacing with the Vat Sense API.
+ * API Client for interfacing with the Vat Sense API. 
  */
 export class VatSense {
   username: string;
@@ -202,12 +154,12 @@ export class VatSense {
   }: ClientOptions = {}) {
     if (username === undefined) {
       throw new Errors.VatSenseError(
-        "The VAT_SENSE_USERNAME environment variable is missing or empty; either provide it, or instantiate the VatSense client with an username option, like new VatSense({ username: 'My Username' }).",
+        'The VAT_SENSE_USERNAME environment variable is missing or empty; either provide it, or instantiate the VatSense client with an username option, like new VatSense({ username: \'My Username\' }).'
       );
     }
     if (password === undefined) {
       throw new Errors.VatSenseError(
-        "The VAT_SENSE_PASSWORD environment variable is missing or empty; either provide it, or instantiate the VatSense client with an password option, like new VatSense({ password: 'My Password' }).",
+        'The VAT_SENSE_PASSWORD environment variable is missing or empty; either provide it, or instantiate the VatSense client with an password option, like new VatSense({ password: \'My Password\' }).'
       );
     }
 
@@ -224,10 +176,7 @@ export class VatSense {
     const defaultLogLevel = 'warn';
     // Set default logLevel early so that we can log a warning in parseLogLevel.
     this.logLevel = defaultLogLevel;
-    this.logLevel =
-      parseLogLevel(options.logLevel, 'ClientOptions.logLevel', this) ??
-      parseLogLevel(readEnv('VAT_SENSE_LOG'), "process.env['VAT_SENSE_LOG']", this) ??
-      defaultLogLevel;
+    this.logLevel = parseLogLevel(options.logLevel, 'ClientOptions.logLevel', this) ?? parseLogLevel(readEnv('VAT_SENSE_LOG'), 'process.env[\'VAT_SENSE_LOG\']', this) ?? defaultLogLevel;
     this.fetchOptions = options.fetchOptions;
     this.maxRetries = options.maxRetries ?? 2;
     this.fetch = options.fetch ?? Shims.getDefaultFetch();
@@ -254,7 +203,7 @@ export class VatSense {
       fetchOptions: this.fetchOptions,
       username: this.username,
       password: this.password,
-      ...options,
+      ...options
     });
     return client;
   }
@@ -267,17 +216,14 @@ export class VatSense {
   }
 
   protected defaultQuery(): Record<string, string | undefined> | undefined {
-    return this._options.defaultQuery;
+    return this._options.defaultQuery
   }
 
   protected validateHeaders({ values, nulls }: NullableHeaders) {
     return;
   }
 
-  protected async authHeaders(
-    opts: FinalRequestOptions,
-    schemes: { basicAuth?: boolean },
-  ): Promise<NullableHeaders | undefined> {
+  protected async authHeaders(opts: FinalRequestOptions, schemes: { basicAuth?: boolean }): Promise<NullableHeaders | undefined> {
     return buildHeaders([schemes.basicAuth ? await this.basicAuth(opts) : null]);
   }
 
@@ -290,9 +236,9 @@ export class VatSense {
       return undefined;
     }
 
-    const credentials = `${this.username}:${this.password}`;
-    const Authorization = `Basic ${toBase64(credentials)}`;
-    return buildHeaders([{ Authorization }]);
+    const credentials = `${this.username}:${this.password}`
+    const Authorization = `Basic ${toBase64(credentials)}`
+    return buildHeaders([{ Authorization }])
   }
 
   /**
@@ -319,11 +265,7 @@ export class VatSense {
     return Errors.APIError.generate(status, error, message, headers);
   }
 
-  buildURL(
-    path: string,
-    query: Record<string, unknown> | null | undefined,
-    defaultBaseURL?: string | undefined,
-  ): string {
+  buildURL(path: string, query: Record<string, unknown> | null | undefined, defaultBaseURL?: string | undefined): string {
     const baseURL = (!this.#baseURLOverridden() && defaultBaseURL) || this.baseURL;
     const url =
       isAbsoluteURL(path) ?
@@ -411,9 +353,7 @@ export class VatSense {
 
     await this.prepareOptions(options);
 
-    const { req, url, timeout } = await this.buildRequest(options, {
-      retryCount: maxRetries - retriesRemaining,
-    });
+    const { req, url, timeout } = await this.buildRequest(options, { retryCount: maxRetries - retriesRemaining });
 
     await this.prepareRequest(req, { url, options });
 
@@ -422,16 +362,7 @@ export class VatSense {
     const retryLogStr = retryOfRequestLogID === undefined ? '' : `, retryOf: ${retryOfRequestLogID}`;
     const startTime = Date.now();
 
-    loggerFor(this).debug(
-      `[${requestLogID}] sending request`,
-      formatRequestDetails({
-        retryOfRequestLogID,
-        method: options.method,
-        url,
-        options,
-        headers: req.headers,
-      }),
-    );
+    loggerFor(this).debug(`[${requestLogID}] sending request`, formatRequestDetails({ retryOfRequestLogID, method: options.method, url, options, headers: req.headers }));
 
     if (options.signal?.aborted) {
       throw new Errors.APIUserAbortError();
@@ -450,45 +381,21 @@ export class VatSense {
       // deno throws "TypeError: error sending request for url (https://example/): client error (Connect): tcp connect error: Operation timed out (os error 60): Operation timed out (os error 60)"
       // undici throws "TypeError: fetch failed" with cause "ConnectTimeoutError: Connect Timeout Error (attempted address: example:443, timeout: 1ms)"
       // others do not provide enough information to distinguish timeouts from other connection errors
-      const isTimeout =
-        isAbortError(response) ||
-        /timed? ?out/i.test(String(response) + ('cause' in response ? String(response.cause) : ''));
+      const isTimeout = isAbortError(response) || /timed? ?out/i.test(String(response) + ('cause' in response ? String(response.cause) : ''))
       if (retriesRemaining) {
-        loggerFor(this).info(
-          `[${requestLogID}] connection ${isTimeout ? 'timed out' : 'failed'} - ${retryMessage}`,
-        );
-        loggerFor(this).debug(
-          `[${requestLogID}] connection ${isTimeout ? 'timed out' : 'failed'} (${retryMessage})`,
-          formatRequestDetails({
-            retryOfRequestLogID,
-            url,
-            durationMs: headersTime - startTime,
-            message: response.message,
-          }),
-        );
+        loggerFor(this).info(`[${requestLogID}] connection ${isTimeout ? 'timed out' : 'failed'} - ${retryMessage}`)
+        loggerFor(this).debug(`[${requestLogID}] connection ${isTimeout ? 'timed out' : 'failed'} (${retryMessage})`, formatRequestDetails({ retryOfRequestLogID, url, durationMs: headersTime - startTime, message: response.message }));
         return this.retryRequest(options, retriesRemaining, retryOfRequestLogID ?? requestLogID);
       }
-      loggerFor(this).info(
-        `[${requestLogID}] connection ${isTimeout ? 'timed out' : 'failed'} - error; no more retries left`,
-      );
-      loggerFor(this).debug(
-        `[${requestLogID}] connection ${isTimeout ? 'timed out' : 'failed'} (error; no more retries left)`,
-        formatRequestDetails({
-          retryOfRequestLogID,
-          url,
-          durationMs: headersTime - startTime,
-          message: response.message,
-        }),
-      );
+      loggerFor(this).info(`[${requestLogID}] connection ${isTimeout ? 'timed out' : 'failed'} - error; no more retries left`)
+      loggerFor(this).debug(`[${requestLogID}] connection ${isTimeout ? 'timed out' : 'failed'} (error; no more retries left)`, formatRequestDetails({ retryOfRequestLogID, url, durationMs: headersTime - startTime, message: response.message }));
       if (isTimeout) {
         throw new Errors.APIConnectionTimeoutError();
       }
       throw new Errors.APIConnectionError({ cause: response });
     }
 
-    const responseInfo = `[${requestLogID}${retryLogStr}] ${req.method} ${url} ${
-      response.ok ? 'succeeded' : 'failed'
-    } with status ${response.status} in ${headersTime - startTime}ms`;
+    const responseInfo = `[${requestLogID}${retryLogStr}] ${req.method} ${url} ${response.ok ? 'succeeded' : 'failed'} with status ${response.status} in ${headersTime - startTime}ms`;
 
     if (!response.ok) {
       const shouldRetry = await this.shouldRetry(response);
@@ -497,60 +404,27 @@ export class VatSense {
 
         // We don't need the body of this response.
         await Shims.CancelReadableStream(response.body);
-        loggerFor(this).info(`${responseInfo} - ${retryMessage}`);
-        loggerFor(this).debug(
-          `[${requestLogID}] response error (${retryMessage})`,
-          formatRequestDetails({
-            retryOfRequestLogID,
-            url: response.url,
-            status: response.status,
-            headers: response.headers,
-            durationMs: headersTime - startTime,
-          }),
-        );
-        return this.retryRequest(
-          options,
-          retriesRemaining,
-          retryOfRequestLogID ?? requestLogID,
-          response.headers,
-        );
+        loggerFor(this).info(`${responseInfo} - ${retryMessage}`)
+        loggerFor(this).debug(`[${requestLogID}] response error (${retryMessage})`, formatRequestDetails({ retryOfRequestLogID, url: response.url, status: response.status, headers: response.headers, durationMs: headersTime - startTime }));
+        return this.retryRequest(options, retriesRemaining, retryOfRequestLogID ?? requestLogID, response.headers);
       }
 
       const retryMessage = shouldRetry ? `error; no more retries left` : `error; not retryable`;
 
-      loggerFor(this).info(`${responseInfo} - ${retryMessage}`);
+      loggerFor(this).info(`${responseInfo} - ${retryMessage}`)
 
       const errText = await response.text().catch((err: any) => castToError(err).message);
       const errJSON = safeJSON(errText) as any;
       const errMessage = errJSON ? undefined : errText;
 
-      loggerFor(this).debug(
-        `[${requestLogID}] response error (${retryMessage})`,
-        formatRequestDetails({
-          retryOfRequestLogID,
-          url: response.url,
-          status: response.status,
-          headers: response.headers,
-          message: errMessage,
-          durationMs: Date.now() - startTime,
-        }),
-      );
+      loggerFor(this).debug(`[${requestLogID}] response error (${retryMessage})`, formatRequestDetails({ retryOfRequestLogID, url: response.url, status: response.status, headers: response.headers, message: errMessage, durationMs: Date.now() - startTime }));
 
       const err = this.makeStatusError(response.status, errJSON, errMessage, response.headers);
       throw err;
     }
 
-    loggerFor(this).info(responseInfo);
-    loggerFor(this).debug(
-      `[${requestLogID}] response start`,
-      formatRequestDetails({
-        retryOfRequestLogID,
-        url: response.url,
-        status: response.status,
-        headers: response.headers,
-        durationMs: headersTime - startTime,
-      }),
-    );
+    loggerFor(this).info(responseInfo)
+    loggerFor(this).debug(`[${requestLogID}] response start`, formatRequestDetails({ retryOfRequestLogID, url: response.url, status: response.status, headers: response.headers, durationMs: headersTime - startTime }));
 
     return { response, options, controller, requestLogID, retryOfRequestLogID, startTime };
   }
@@ -567,9 +441,7 @@ export class VatSense {
 
     const timeout = setTimeout(abort, ms);
 
-    const isReadableBody =
-      ((globalThis as any).ReadableStream && options.body instanceof (globalThis as any).ReadableStream) ||
-      (typeof options.body === 'object' && options.body !== null && Symbol.asyncIterator in options.body);
+    const isReadableBody = ((globalThis as any).ReadableStream && options.body instanceof (globalThis as any).ReadableStream) || (typeof options.body === "object" && options.body !== null && Symbol.asyncIterator in options.body);
 
     const fetchOptions: RequestInit = {
       signal: controller.signal as any,
@@ -584,6 +456,7 @@ export class VatSense {
     }
 
     try {
+
       // use undefined this binding; fetch errors if bound to something else in browser/cloudflare
       return await this.fetch.call(undefined, url, fetchOptions);
     } finally {
@@ -684,12 +557,11 @@ export class VatSense {
     const req: FinalizedRequestInit = {
       method,
       headers: reqHeaders,
-      ...(options.signal && { signal: options.signal }),
-      ...((globalThis as any).ReadableStream &&
-        body instanceof (globalThis as any).ReadableStream && { duplex: 'half' }),
+      ...(options.signal && { signal: options.signal}),
+      ...((globalThis as any).ReadableStream && body instanceof (globalThis as any).ReadableStream && { duplex: "half" }),
       ...(body && { body }),
-      ...((this.fetchOptions as any) ?? {}),
-      ...((options.fetchOptions as any) ?? {}),
+      ...(this.fetchOptions as any ?? {}),
+      ...(options.fetchOptions as any ?? {}),
     };
 
     return { req, url, timeout: options.timeout };
@@ -714,17 +586,15 @@ export class VatSense {
 
     const headers = buildHeaders([
       idempotencyHeaders,
-      {
-        Accept: 'application/json',
-        'User-Agent': this.getUserAgent(),
-        'X-Stainless-Retry-Count': String(retryCount),
-        ...(options.timeout ? { 'X-Stainless-Timeout': String(Math.trunc(options.timeout / 1000)) } : {}),
-        ...getPlatformHeaders(),
-      },
+      {Accept: 'application/json',
+      'User-Agent': this.getUserAgent(),
+      'X-Stainless-Retry-Count': String(retryCount),
+      ...(options.timeout ? { 'X-Stainless-Timeout': String(Math.trunc(options.timeout / 1000)) } : {}),
+      ...getPlatformHeaders()},
       await this.authHeaders(options, options.__security ?? { basicAuth: true }),
       this._options.defaultHeaders,
       bodyHeaders,
-      options.headers,
+      options.headers
     ]);
 
     this.validateHeaders(headers);
@@ -751,9 +621,11 @@ export class VatSense {
       ArrayBuffer.isView(body) ||
       body instanceof ArrayBuffer ||
       body instanceof DataView ||
-      (typeof body === 'string' &&
+      (
+        typeof body === 'string' &&
         // Preserve legacy string encoding behavior for now
-        headers.values.has('content-type')) ||
+        headers.values.has('content-type')
+      ) ||
       // `Blob` is superset of `File`
       ((globalThis as any).Blob && body instanceof (globalThis as any).Blob) ||
       // `FormData` -> `multipart/form-data`
@@ -784,7 +656,7 @@ export class VatSense {
   }
 
   static VatSense = this;
-  static DEFAULT_TIMEOUT = 60000; // 1 minute
+  static DEFAULT_TIMEOUT = 60000 // 1 minute
 
   static VatSenseError = Errors.VatSenseError;
   static APIError = Errors.APIError;
@@ -841,65 +713,71 @@ VatSense.Usage = Usage;
 VatSense.Sandbox = Sandbox;
 
 export declare namespace VatSense {
-  export type RequestOptions = Opts.RequestOptions;
+      export type RequestOptions = Opts.RequestOptions;
 
-  export {
-    Rates as Rates,
-    type FindRate as FindRate,
-    type Rate as Rate,
-    type RateWithTaxRate as RateWithTaxRate,
-    type TaxRate as TaxRate,
-    type RateListResponse as RateListResponse,
-    type RateCalculatePriceResponse as RateCalculatePriceResponse,
-    type RateListTypesResponse as RateListTypesResponse,
-    type RateListParams as RateListParams,
-    type RateCalculatePriceParams as RateCalculatePriceParams,
-    type RateDetailsParams as RateDetailsParams,
-    type RateFindParams as RateFindParams,
-  };
+      export {
+  Rates as Rates,
+  type FindRate as FindRate,
+  type Rate as Rate,
+  type RateWithTaxRate as RateWithTaxRate,
+  type TaxRate as TaxRate,
+  type RateListResponse as RateListResponse,
+  type RateCalculatePriceResponse as RateCalculatePriceResponse,
+  type RateListTypesResponse as RateListTypesResponse,
+  type RateListParams as RateListParams,
+  type RateCalculatePriceParams as RateCalculatePriceParams,
+  type RateDetailsParams as RateDetailsParams,
+  type RateFindParams as RateFindParams
+};
 
-  export {
-    Countries as Countries,
-    type Country as Country,
-    type CountryListResponse as CountryListResponse,
-    type CountryListProvincesResponse as CountryListProvincesResponse,
-    type CountryListParams as CountryListParams,
-    type CountryListProvincesParams as CountryListProvincesParams,
-  };
+export {
+  Countries as Countries,
+  type Country as Country,
+  type CountryListResponse as CountryListResponse,
+  type CountryListProvincesResponse as CountryListProvincesResponse,
+  type CountryListParams as CountryListParams,
+  type CountryListProvincesParams as CountryListProvincesParams
+};
 
-  export {
-    Validate as Validate,
-    type ValidateCheckResponse as ValidateCheckResponse,
-    type ValidateCheckParams as ValidateCheckParams,
-  };
+export {
+  Validate as Validate,
+  type ValidateCheckResponse as ValidateCheckResponse,
+  type ValidateCheckParams as ValidateCheckParams
+};
 
-  export {
-    Currency as Currency,
-    type VatPrice as VatPrice,
-    type CurrencyListResponse as CurrencyListResponse,
-    type CurrencyCalculateVatPriceResponse as CurrencyCalculateVatPriceResponse,
-    type CurrencyConvertResponse as CurrencyConvertResponse,
-    type CurrencyListParams as CurrencyListParams,
-    type CurrencyCalculateVatPriceParams as CurrencyCalculateVatPriceParams,
-    type CurrencyConvertParams as CurrencyConvertParams,
-  };
+export {
+  Currency as Currency,
+  type VatPrice as VatPrice,
+  type CurrencyListResponse as CurrencyListResponse,
+  type CurrencyCalculateVatPriceResponse as CurrencyCalculateVatPriceResponse,
+  type CurrencyConvertResponse as CurrencyConvertResponse,
+  type CurrencyListParams as CurrencyListParams,
+  type CurrencyCalculateVatPriceParams as CurrencyCalculateVatPriceParams,
+  type CurrencyConvertParams as CurrencyConvertParams
+};
 
-  export {
-    InvoiceResource as InvoiceResource,
-    type CreateInvoice as CreateInvoice,
-    type Invoice as Invoice,
-    type InvoiceBusinessInput as InvoiceBusinessInput,
-    type InvoiceConversionInput as InvoiceConversionInput,
-    type InvoiceCustomerInput as InvoiceCustomerInput,
-    type InvoiceResponse as InvoiceResponse,
-    type InvoiceListResponse as InvoiceListResponse,
-    type InvoiceDeleteResponse as InvoiceDeleteResponse,
-    type InvoiceCreateParams as InvoiceCreateParams,
-    type InvoiceUpdateParams as InvoiceUpdateParams,
-    type InvoiceListParams as InvoiceListParams,
-  };
+export {
+  InvoiceResource as InvoiceResource,
+  type CreateInvoice as CreateInvoice,
+  type Invoice as Invoice,
+  type InvoiceBusinessInput as InvoiceBusinessInput,
+  type InvoiceConversionInput as InvoiceConversionInput,
+  type InvoiceCustomerInput as InvoiceCustomerInput,
+  type InvoiceResponse as InvoiceResponse,
+  type InvoiceListResponse as InvoiceListResponse,
+  type InvoiceDeleteResponse as InvoiceDeleteResponse,
+  type InvoiceCreateParams as InvoiceCreateParams,
+  type InvoiceUpdateParams as InvoiceUpdateParams,
+  type InvoiceListParams as InvoiceListParams
+};
 
-  export { Usage as Usage, type UsageRetrieveResponse as UsageRetrieveResponse };
+export {
+  Usage as Usage,
+  type UsageRetrieveResponse as UsageRetrieveResponse
+};
 
-  export { Sandbox as Sandbox, type SandboxGenerateKeyResponse as SandboxGenerateKeyResponse };
-}
+export {
+  Sandbox as Sandbox,
+  type SandboxGenerateKeyResponse as SandboxGenerateKeyResponse
+};
+    }
