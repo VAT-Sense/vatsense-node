@@ -14,7 +14,7 @@ export class Sandbox extends APIResource {
    * limited to 1 key per IP address per 6 hours.
    */
   generateKey(options?: RequestOptions): APIPromise<SandboxGenerateKeyResponse> {
-    return this._client.post('/sandbox/key', { ...options, __security: {  } });
+    return this._client.post('/sandbox/key', { ...options, __security: {} });
   }
 }
 
@@ -44,7 +44,5 @@ export namespace SandboxGenerateKeyResponse {
 }
 
 export declare namespace Sandbox {
-  export {
-    type SandboxGenerateKeyResponse as SandboxGenerateKeyResponse
-  };
+  export { type SandboxGenerateKeyResponse as SandboxGenerateKeyResponse };
 }

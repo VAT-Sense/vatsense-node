@@ -15,14 +15,20 @@ export class Countries extends APIResource {
    *
    * You can optionally filter by country code or IP address.
    */
-  list(query: CountryListParams | null | undefined = {}, options?: RequestOptions): APIPromise<CountryListResponse> {
+  list(
+    query: CountryListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<CountryListResponse> {
     return this._client.get('/countries', { query, ...options });
   }
 
   /**
    * Retrieve a list of all provinces within a given country.
    */
-  listProvinces(query: CountryListProvincesParams, options?: RequestOptions): APIPromise<CountryListProvincesResponse> {
+  listProvinces(
+    query: CountryListProvincesParams,
+    options?: RequestOptions,
+  ): APIPromise<CountryListProvincesResponse> {
     return this._client.get('/countries/provinces', { query, ...options });
   }
 }
@@ -106,6 +112,6 @@ export declare namespace Countries {
     type CountryListResponse as CountryListResponse,
     type CountryListProvincesResponse as CountryListProvincesResponse,
     type CountryListParams as CountryListParams,
-    type CountryListProvincesParams as CountryListProvincesParams
+    type CountryListProvincesParams as CountryListProvincesParams,
   };
 }

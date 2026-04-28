@@ -17,7 +17,10 @@ export class Rates extends APIResource {
    *
    * You can optionally filter by country code, IP address, or EU membership.
    */
-  list(query: RateListParams | null | undefined = {}, options?: RequestOptions): APIPromise<RateListResponse> {
+  list(
+    query: RateListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<RateListResponse> {
     return this._client.get('/rates', { query, ...options });
   }
 
@@ -26,7 +29,10 @@ export class Rates extends APIResource {
    * endpoints to return the particular VAT price for an applicable VAT rate.
    * Requires both a location (country_code or ip_address) and a price to calculate.
    */
-  calculatePrice(query: RateCalculatePriceParams, options?: RequestOptions): APIPromise<RateCalculatePriceResponse> {
+  calculatePrice(
+    query: RateCalculatePriceParams,
+    options?: RequestOptions,
+  ): APIPromise<RateCalculatePriceResponse> {
     return this._client.get('/rates/price', { query, ...options });
   }
 
@@ -327,6 +333,6 @@ export declare namespace Rates {
     type RateListParams as RateListParams,
     type RateCalculatePriceParams as RateCalculatePriceParams,
     type RateDetailsParams as RateDetailsParams,
-    type RateFindParams as RateFindParams
+    type RateFindParams as RateFindParams,
   };
 }

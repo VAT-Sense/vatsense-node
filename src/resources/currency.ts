@@ -14,7 +14,10 @@ export class Currency extends APIResource {
    *
    * You can optionally filter by source and target currency.
    */
-  list(query: CurrencyListParams | null | undefined = {}, options?: RequestOptions): APIPromise<CurrencyListResponse> {
+  list(
+    query: CurrencyListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<CurrencyListResponse> {
     return this._client.get('/currency', { query, ...options });
   }
 
@@ -22,7 +25,10 @@ export class Currency extends APIResource {
    * Calculate the inclusive and exclusive VAT price on a given amount and VAT rate.
    * This is a standalone calculation that does not look up rates by country.
    */
-  calculateVatPrice(query: CurrencyCalculateVatPriceParams, options?: RequestOptions): APIPromise<CurrencyCalculateVatPriceResponse> {
+  calculateVatPrice(
+    query: CurrencyCalculateVatPriceParams,
+    options?: RequestOptions,
+  ): APIPromise<CurrencyCalculateVatPriceResponse> {
     return this._client.get('/currency/price', { query, ...options });
   }
 
@@ -199,6 +205,6 @@ export declare namespace Currency {
     type CurrencyConvertResponse as CurrencyConvertResponse,
     type CurrencyListParams as CurrencyListParams,
     type CurrencyCalculateVatPriceParams as CurrencyCalculateVatPriceParams,
-    type CurrencyConvertParams as CurrencyConvertParams
+    type CurrencyConvertParams as CurrencyConvertParams,
   };
 }
