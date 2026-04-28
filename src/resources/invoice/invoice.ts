@@ -2,7 +2,16 @@
 
 import { APIResource } from '../../core/resource';
 import * as ItemAPI from './item';
-import { InvoiceItem, InvoiceItemInput, Item, ItemAddParams, ItemDeleteParams, ItemRetrieveParams, ItemRetrieveResponse, ItemUpdateParams } from './item';
+import {
+  InvoiceItem,
+  InvoiceItemInput,
+  Item,
+  ItemAddParams,
+  ItemDeleteParams,
+  ItemRetrieveParams,
+  ItemRetrieveResponse,
+  ItemUpdateParams,
+} from './item';
 import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
@@ -89,7 +98,11 @@ export class InvoiceResource extends APIResource {
    * );
    * ```
    */
-  update(invoiceID: string, body: InvoiceUpdateParams, options?: RequestOptions): APIPromise<InvoiceResponse> {
+  update(
+    invoiceID: string,
+    body: InvoiceUpdateParams,
+    options?: RequestOptions,
+  ): APIPromise<InvoiceResponse> {
     return this._client.patch(path`/invoice/${invoiceID}`, { body, ...options });
   }
 
@@ -101,7 +114,10 @@ export class InvoiceResource extends APIResource {
    * const invoices = await client.invoice.list();
    * ```
    */
-  list(query: InvoiceListParams | null | undefined = {}, options?: RequestOptions): APIPromise<InvoiceListResponse> {
+  list(
+    query: InvoiceListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<InvoiceListResponse> {
     return this._client.get('/invoice', { query, ...options });
   }
 
@@ -571,7 +587,7 @@ export declare namespace InvoiceResource {
     type InvoiceDeleteResponse as InvoiceDeleteResponse,
     type InvoiceCreateParams as InvoiceCreateParams,
     type InvoiceUpdateParams as InvoiceUpdateParams,
-    type InvoiceListParams as InvoiceListParams
+    type InvoiceListParams as InvoiceListParams,
   };
 
   export {
@@ -582,6 +598,6 @@ export declare namespace InvoiceResource {
     type ItemRetrieveParams as ItemRetrieveParams,
     type ItemUpdateParams as ItemUpdateParams,
     type ItemDeleteParams as ItemDeleteParams,
-    type ItemAddParams as ItemAddParams
+    type ItemAddParams as ItemAddParams,
   };
 }
