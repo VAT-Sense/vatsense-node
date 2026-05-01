@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.2.0 (2026-05-01)
+
+Full Changelog: [v0.1.1...v0.2.0](https://github.com/VAT-Sense/vatsense-node/compare/v0.1.1...v0.2.0)
+
+### Features
+
+* support setting headers via env ([2734374](https://github.com/VAT-Sense/vatsense-node/commit/2734374a3f34f2257dbc134f2cd101f15280a5eb))
+
+
+### Chores
+
+* **format:** run eslint and prettier separately ([e9d127c](https://github.com/VAT-Sense/vatsense-node/commit/e9d127c2ab767a9886f9c8e770b97e9800e0df00))
+* **formatter:** run prettier and eslint separately ([cb74804](https://github.com/VAT-Sense/vatsense-node/commit/cb74804c408e47b688d3e4dccac49b7477d09486))
+* **internal:** codegen related update ([b215a57](https://github.com/VAT-Sense/vatsense-node/commit/b215a5758ae626465ae9aa97524405252a6a6ace))
+* **internal:** codegen related update ([da26aca](https://github.com/VAT-Sense/vatsense-node/commit/da26acab4db9785c74652b38c6aa0673984a5c77))
+* **internal:** more robust bootstrap script ([7c9f2fe](https://github.com/VAT-Sense/vatsense-node/commit/7c9f2fec404604fbb3fac01a31e332fd151d8f47))
+
 ## 0.1.1 (2026-03-25)
 
 Full Changelog: [v0.1.0...v0.1.1](https://github.com/VAT-Sense/vatsense-node/compare/v0.1.0...v0.1.1)
