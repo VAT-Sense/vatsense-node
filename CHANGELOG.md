@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.2.1 (2026-05-19)
+
+Full Changelog: [v0.2.0...v0.2.1](https://github.com/VAT-Sense/vatsense-node/compare/v0.2.0...v0.2.1)
+
+### Bug Fixes
+
+* **typescript:** upgrade tsc-multi so that it works with Node 26 ([5274b08](https://github.com/VAT-Sense/vatsense-node/commit/5274b08a61f5d36c7804dc8f8714032cebad923f))
+
+
+### Chores
+
+* redact api-key headers in debug logs ([23bd0ce](https://github.com/VAT-Sense/vatsense-node/commit/23bd0cedacb6af956e8744cf66a392debb339575))
+* **tests:** remove redundant File import ([be28c4f](https://github.com/VAT-Sense/vatsense-node/commit/be28c4f7d85248fa5d8b89ceaf23597311aa28ac))
+
 ## 0.2.0 (2026-05-01)
 
 Full Changelog: [v0.1.1...v0.2.0](https://github.com/VAT-Sense/vatsense-node/compare/v0.1.1...v0.2.0)

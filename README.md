@@ -71,9 +71,9 @@ console.log(response.data.consultation_number);
 ```js
 const rate = await client.rates.find({ country_code: 'DE' });
 
-console.log(rate.data.country_name);    // "Germany"
-console.log(rate.data.tax_rate.rate);   // 19
-console.log(rate.data.tax_rate.class);  // "standard"
+console.log(rate.data.country_name); // "Germany"
+console.log(rate.data.tax_rate.rate); // 19
+console.log(rate.data.tax_rate.class); // "standard"
 ```
 
 ### Find a rate for a specific product type
@@ -81,8 +81,8 @@ console.log(rate.data.tax_rate.class);  // "standard"
 ```js
 const rate = await client.rates.find({ country_code: 'DE', type: 'ebooks' });
 
-console.log(rate.data.tax_rate.rate);   // 7
-console.log(rate.data.tax_rate.class);  // "reduced"
+console.log(rate.data.tax_rate.rate); // 7
+console.log(rate.data.tax_rate.class); // "reduced"
 ```
 
 ### Find a rate by IP address
@@ -92,8 +92,8 @@ Useful for determining the correct rate based on your customer's location:
 ```js
 const rate = await client.rates.find({ ip_address: '185.86.151.11' });
 
-console.log(rate.data.country_code);    // "GB"
-console.log(rate.data.tax_rate.rate);   // 20
+console.log(rate.data.country_code); // "GB"
+console.log(rate.data.tax_rate.rate); // 20
 ```
 
 ### Calculate a VAT-inclusive price
@@ -105,10 +105,10 @@ const result = await client.rates.calculatePrice({
   country_code: 'FR',
 });
 
-console.log(result.data.vat_price.price_incl_vat);  // Price including VAT
-console.log(result.data.vat_price.price_excl_vat);  // Price excluding VAT
-console.log(result.data.vat_price.vat_rate);         // VAT rate applied
-console.log(result.data.vat_price.vat);              // VAT amount
+console.log(result.data.vat_price.price_incl_vat); // Price including VAT
+console.log(result.data.vat_price.price_excl_vat); // Price excluding VAT
+console.log(result.data.vat_price.vat_rate); // VAT rate applied
+console.log(result.data.vat_price.vat); // VAT amount
 ```
 
 ### List all VAT rates
@@ -150,8 +150,8 @@ try {
   const response = await client.validate.check({ vat_number: 'GB288305674' });
 } catch (err) {
   if (err instanceof VatSense.APIError) {
-    console.log(err.status);  // e.g. 400
-    console.log(err.name);    // e.g. "BadRequestError"
+    console.log(err.status); // e.g. 400
+    console.log(err.name); // e.g. "BadRequestError"
     console.log(err.message);
   }
 }
@@ -159,15 +159,15 @@ try {
 
 A `412` error means the upstream validation service (VIES, HMRC, etc.) is temporarily unavailable. These requests do not count against your usage quota.
 
-| Status Code | Error Type                 |
-| ----------- | -------------------------- |
-| 400         | `BadRequestError`          |
-| 401         | `AuthenticationError`      |
-| 404         | `NotFoundError`            |
-| 409         | `ConflictError`            |
-| 429         | `RateLimitError`           |
-| >= 500      | `InternalServerError`      |
-| N/A         | `APIConnectionError`       |
+| Status Code | Error Type            |
+| ----------- | --------------------- |
+| 400         | `BadRequestError`     |
+| 401         | `AuthenticationError` |
+| 404         | `NotFoundError`       |
+| 409         | `ConflictError`       |
+| 429         | `RateLimitError`      |
+| >= 500      | `InternalServerError` |
+| N/A         | `APIConnectionError`  |
 
 ## Retries
 
@@ -182,10 +182,7 @@ const client = new VatSense({
 });
 
 // Or configure per request
-const response = await client.validate.check(
-  { vat_number: 'GB288305674' },
-  { maxRetries: 5 },
-);
+const response = await client.validate.check({ vat_number: 'GB288305674' }, { maxRetries: 5 });
 ```
 
 ### Timeouts
@@ -203,14 +200,14 @@ await client.validate.check({ vat_number: 'GB288305674' }, { timeout: 5 * 1000 }
 
 ## Available services
 
-| Service              | Description                                     |
-| -------------------- | ----------------------------------------------- |
-| `client.validate`    | Validate VAT and EORI numbers                   |
-| `client.rates`       | VAT/GST rate lookups, price calculations         |
-| `client.countries`   | Country data and province lookups                |
-| `client.currency`    | Exchange rates and currency conversion           |
-| `client.invoice`     | Create and manage VAT-compliant invoices         |
-| `client.usage`       | Check your API usage                             |
+| Service            | Description                              |
+| ------------------ | ---------------------------------------- |
+| `client.validate`  | Validate VAT and EORI numbers            |
+| `client.rates`     | VAT/GST rate lookups, price calculations |
+| `client.countries` | Country data and province lookups        |
+| `client.currency`  | Exchange rates and currency conversion   |
+| `client.invoice`   | Create and manage VAT-compliant invoices |
+| `client.usage`     | Check your API usage                     |
 
 ## Documentation
 
