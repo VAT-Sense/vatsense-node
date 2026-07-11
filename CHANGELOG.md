@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.2.2 (2026-07-11)
+
+Full Changelog: [v0.2.1...v0.2.2](https://github.com/VAT-Sense/vatsense-node/compare/v0.2.1...v0.2.2)
+
+### Bug Fixes
+
+* **ci:** bump @arethetypeswrong/cli to ^0.18.0 and run CI workflows on Node 24 ([c507c2a](https://github.com/VAT-Sense/vatsense-node/commit/c507c2a96de16c18f9d9c94ee186435b61afdb69))
+* **client:** send content-type header for requests with an omitted optional body ([4773bdf](https://github.com/VAT-Sense/vatsense-node/commit/4773bdf147c71cca21f3e966727f11b9c5969066))
+
 ## 0.2.1 (2026-05-19)
 
 Full Changelog: [v0.2.0...v0.2.1](https://github.com/VAT-Sense/vatsense-node/compare/v0.2.0...v0.2.1)
