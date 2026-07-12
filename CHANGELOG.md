@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.3.0 (2026-07-12)
+
+Full Changelog: [v0.2.2...v0.3.0](https://github.com/VAT-Sense/vatsense-node/compare/v0.2.2...v0.3.0)
+
+### Features
+
+* **api:** api update ([6bca528](https://github.com/VAT-Sense/vatsense-node/commit/6bca528b990bc1458dd28f6c2958b3cd397018a7))
+
 ## 0.2.2 (2026-07-11)
 
 Full Changelog: [v0.2.1...v0.2.2](https://github.com/VAT-Sense/vatsense-node/compare/v0.2.1...v0.2.2)
