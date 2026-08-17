@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.4.0 (2026-07-18)
+
+Full Changelog: [v0.3.0...v0.4.0](https://github.com/VAT-Sense/vatsense-node/compare/v0.3.0...v0.4.0)
+
+### Features
+
+* **stlc:** configurable CI runner and private-production-repo support in workflow templates ([3b47933](https://github.com/VAT-Sense/vatsense-node/commit/3b47933ea5c910255870be0e6aa56d74f52a3dd8))
+
 ## 0.3.0 (2026-07-12)
 
 Full Changelog: [v0.2.2...v0.3.0](https://github.com/VAT-Sense/vatsense-node/compare/v0.2.2...v0.3.0)
