@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.1 (2026-09-04)
+
+Full Changelog: [v0.4.0...v0.4.1](https://github.com/VAT-Sense/vatsense-node/compare/v0.4.0...v0.4.1)
+
 ## 0.4.0 (2026-07-18)
 
 Full Changelog: [v0.3.0...v0.4.0](https://github.com/VAT-Sense/vatsense-node/compare/v0.3.0...v0.4.0)

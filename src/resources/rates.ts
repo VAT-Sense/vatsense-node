@@ -75,6 +75,12 @@ export interface FindRate {
   success?: boolean;
 }
 
+/**
+ * A country's rate listing. For an overseas territory queried by its own ISO code
+ * (e.g. "NC"), country_code and country_name identify the territory and `standard`
+ * also carries a `province` key naming the parent country's province the rate is
+ * stored under.
+ */
 export interface Rate {
   /**
    * 2-character ISO 3166-1 alpha-2 country code.
@@ -121,7 +127,8 @@ export interface RateWithTaxRate {
 
 export interface TaxRate {
   /**
-   * The rate class (e.g. "standard", "reduced", "zero").
+   * The rate tier within its tax (e.g. "standard", "reduced", "higher", "zero",
+   * "exempt").
    */
   class?: string;
 
@@ -136,6 +143,13 @@ export interface TaxRate {
    * The tax rate percentage.
    */
   rate?: number;
+
+  /**
+   * Short name of the tax this rate belongs to (e.g. "vat", "gst", "hst", "pst",
+   * "qst", "igic", "sst"). Open vocabulary, lower case. Null where not yet
+   * classified.
+   */
+  tax_name?: string | null;
 
   /**
    * Comma-separated list of product types this rate applies to, or false if it
@@ -186,7 +200,12 @@ export interface RateListTypesResponse {
 
 export interface RateListParams {
   /**
-   * A 2-character ISO 3166-1 alpha-2 country code (e.g. "GB", "FR").
+   * A 2-character ISO 3166-1 alpha-2 country code (e.g. "GB", "FR"). Overseas
+   * territories that carry their own ISO code but are modelled as provinces of a
+   * parent country (e.g. "NC" New Caledonia, "MF" Saint Martin, "GP", "MQ", "RE",
+   * "PF", "GF", "YT", "BL", "PM", "WF" under "FR") may be queried directly; the
+   * response identifies the territory and the rate is the one the
+   * parent-plus-province query returns.
    */
   country_code?: string;
 
@@ -221,7 +240,12 @@ export interface RateCalculatePriceParams {
   tax_type: 'incl' | 'excl';
 
   /**
-   * A 2-character ISO 3166-1 alpha-2 country code (e.g. "GB", "FR").
+   * A 2-character ISO 3166-1 alpha-2 country code (e.g. "GB", "FR"). Overseas
+   * territories that carry their own ISO code but are modelled as provinces of a
+   * parent country (e.g. "NC" New Caledonia, "MF" Saint Martin, "GP", "MQ", "RE",
+   * "PF", "GF", "YT", "BL", "PM", "WF" under "FR") may be queried directly; the
+   * response identifies the territory and the rate is the one the
+   * parent-plus-province query returns.
    */
   country_code?: string;
 
@@ -251,7 +275,12 @@ export interface RateCalculatePriceParams {
 
 export interface RateDetailsParams {
   /**
-   * A 2-character ISO 3166-1 alpha-2 country code (e.g. "GB", "FR").
+   * A 2-character ISO 3166-1 alpha-2 country code (e.g. "GB", "FR"). Overseas
+   * territories that carry their own ISO code but are modelled as provinces of a
+   * parent country (e.g. "NC" New Caledonia, "MF" Saint Martin, "GP", "MQ", "RE",
+   * "PF", "GF", "YT", "BL", "PM", "WF" under "FR") may be queried directly; the
+   * response identifies the territory and the rate is the one the
+   * parent-plus-province query returns.
    */
   country_code?: string;
 
@@ -287,7 +316,12 @@ export interface RateDetailsParams {
 
 export interface RateFindParams {
   /**
-   * A 2-character ISO 3166-1 alpha-2 country code (e.g. "GB", "FR").
+   * A 2-character ISO 3166-1 alpha-2 country code (e.g. "GB", "FR"). Overseas
+   * territories that carry their own ISO code but are modelled as provinces of a
+   * parent country (e.g. "NC" New Caledonia, "MF" Saint Martin, "GP", "MQ", "RE",
+   * "PF", "GF", "YT", "BL", "PM", "WF" under "FR") may be queried directly; the
+   * response identifies the territory and the rate is the one the
+   * parent-plus-province query returns.
    */
   country_code?: string;
 
