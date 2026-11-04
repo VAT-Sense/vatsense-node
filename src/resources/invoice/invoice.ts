@@ -13,6 +13,7 @@ import {
   ItemUpdateParams,
 } from './item';
 import { APIPromise } from '../../core/api-promise';
+import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
@@ -27,6 +28,10 @@ export class InvoiceResource extends APIResource {
    * totals based on the items provided.
    *
    * Not available with sandbox API keys.
+   *
+   * Send an `Idempotency-Key` to retry a create safely: a repeat with the same key
+   * and the same body, byte for byte, creates nothing and returns the invoice the
+   * first request made.
    *
    * @example
    * ```ts
@@ -51,8 +56,16 @@ export class InvoiceResource extends APIResource {
    * });
    * ```
    */
-  create(body: InvoiceCreateParams, options?: RequestOptions): APIPromise<InvoiceResponse> {
-    return this._client.post('/invoice', { body, ...options });
+  create(params: InvoiceCreateParams, options?: RequestOptions): APIPromise<InvoiceResponse> {
+    const { 'Idempotency-Key': idempotencyKey, ...body } = params;
+    return this._client.post('/invoice', {
+      body,
+      ...options,
+      headers: buildHeaders([
+        { ...(idempotencyKey != null ? { 'Idempotency-Key': idempotencyKey } : undefined) },
+        options?.headers,
+      ]),
+    });
   }
 
   /**
@@ -187,6 +200,13 @@ export interface CreateInvoice {
   notes?: string;
 
   /**
+   * For a credit note: the ID of your own sale invoice it credits. Only a `refund`
+   * can name one; anything else gets `400` "Invalid Original Invoice ID". The credit
+   * note is then headed "Credit note".
+   */
+  original_invoice_id?: string | null;
+
+  /**
    * Pad the auto-generated invoice number with leading zeros to this length.
    */
   pad_invoice_number?: number;
@@ -233,7 +253,9 @@ export interface Invoice {
   invoice_number?: string;
 
   /**
-   * Unique URL to view the invoice. Append "/pdf" to download a PDF copy.
+   * Unique, unguessable URL to view the invoice. Append "/pdf" to download a PDF
+   * copy. Invoices created before the November 2026 relaunch keep their earlier
+   * style of link.
    */
   invoice_url?: string;
 
@@ -248,6 +270,11 @@ export interface Invoice {
   num_items?: number;
 
   object?: 'invoice';
+
+  /**
+   * On a credit note that names the sale invoice it credits: that invoice's ID.
+   */
+  original_invoice_id?: string;
 
   tax_point?: string;
 
@@ -453,6 +480,13 @@ export interface InvoiceCreateParams {
   notes?: string;
 
   /**
+   * For a credit note: the ID of your own sale invoice it credits. Only a `refund`
+   * can name one; anything else gets `400` "Invalid Original Invoice ID". The credit
+   * note is then headed "Credit note".
+   */
+  original_invoice_id?: string | null;
+
+  /**
    * Pad the auto-generated invoice number with leading zeros to this length.
    */
   pad_invoice_number?: number;
@@ -477,6 +511,15 @@ export interface InvoiceCreateParams {
    * Whether the invoice has been zero-rated.
    */
   zero_rated?: boolean;
+
+  /**
+   * Header param: send it to retry a create safely. A repeat with the same key and
+   * the same body, byte for byte, creates nothing and returns the invoice the first
+   * request made; the same key with a different body gets `422` "Idempotency Key
+   * Reused". 1 to 255 characters, unique to this invoice (such as your order number
+   * or a UUID). It lasts as long as its invoice.
+   */
+  'Idempotency-Key'?: string;
 }
 
 export interface InvoiceUpdateParams {

@@ -14,9 +14,10 @@ This will install all the required dependencies and build output files to `dist/
 
 ## Modifying/Adding code
 
-Most of the SDK is generated code. Modifications to code will be persisted between generations, but may
-result in merge conflicts between manual patches and changes from the generator. The generator will never
-modify the contents of the `src/lib/` and `examples/` directories.
+The SDK was first generated from the OpenAPI spec by Stainless and is now maintained by hand.
+When the API changes, update the types and methods to match `https://vatsense.com/openapi.yaml`,
+keeping the existing names so code that uses the SDK keeps working. Header comments in the files
+still say they were generated; they are kept to keep the diff small.
 
 ## Adding and running examples
 

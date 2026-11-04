@@ -37,12 +37,13 @@ export namespace UsageRetrieveResponse {
       remaining?: number;
 
       /**
-       * Total requests allowed on your plan.
+       * Requests available in the current billing period (plan, request packs and,
+       * while overage is on, the overage allowed).
        */
       total?: number;
 
       /**
-       * Requests used in the last 30 days.
+       * Requests used so far in the current billing period.
        */
       used?: number;
     }

@@ -225,6 +225,16 @@ export interface RateListParams {
    * a past date.
    */
   period?: string;
+
+  /**
+   * Whether to list province and territory rates (rate objects that carry a
+   * `province` property) in each country's `other` list. Pass false (or 0) to leave
+   * them out, so only country-wide rates are listed; true (or 1), or omitting the
+   * parameter, lists them as before. The `standard` rate is always the country-wide
+   * one. Ignored when a province_code is given. Any other value returns 400
+   * "Invalid Provinces Parameter".
+   */
+  provinces?: boolean;
 }
 
 export interface RateCalculatePriceParams {
