@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.0](https://github.com/VAT-Sense/vatsense-node/compare/v0.4.1...v0.5.0) (2026-11-05)
+
+
+### Features
+
+* **api:** company matching, provinces filter, Idempotency-Key and credit notes ([#12](https://github.com/VAT-Sense/vatsense-node/issues/12)) ([787574f](https://github.com/VAT-Sense/vatsense-node/commit/787574f2e318ec13990aae52daaa6a5cf8892cbe))
+
 ## 0.4.1 (2026-09-04)
 
 Full Changelog: [v0.4.0...v0.4.1](https://github.com/VAT-Sense/vatsense-node/compare/v0.4.0...v0.4.1)
