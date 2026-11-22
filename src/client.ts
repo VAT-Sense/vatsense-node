@@ -49,6 +49,20 @@ import {
   Rates,
   TaxRate,
 } from './resources/rates';
+import {
+  Batch,
+  BatchContinueParams,
+  BatchCreateParams,
+  BatchDeleteResponse,
+  BatchListParams,
+  BatchListResponse,
+  BatchResponse,
+  BatchResult,
+  BatchResultsParams,
+  BatchResultsResponse,
+  BatchStartParams,
+  Batches,
+} from './resources/batches';
 import { Sandbox, SandboxGenerateKeyResponse } from './resources/sandbox';
 import { Usage, UsageRetrieveResponse } from './resources/usage';
 import { Validate, ValidateCheckParams, ValidateCheckResponse } from './resources/validate';
@@ -850,6 +864,10 @@ export class VatSense {
    * Temporary sandbox API keys for testing
    */
   sandbox: API.Sandbox = new API.Sandbox(this);
+  /**
+   * Bulk validation: check many VAT numbers in one batch
+   */
+  batches: API.Batches = new API.Batches(this);
 }
 
 VatSense.Rates = Rates;
@@ -859,6 +877,7 @@ VatSense.Currency = Currency;
 VatSense.InvoiceResource = InvoiceResource;
 VatSense.Usage = Usage;
 VatSense.Sandbox = Sandbox;
+VatSense.Batches = Batches;
 
 export declare namespace VatSense {
   export type RequestOptions = Opts.RequestOptions;
@@ -922,4 +941,19 @@ export declare namespace VatSense {
   export { Usage as Usage, type UsageRetrieveResponse as UsageRetrieveResponse };
 
   export { Sandbox as Sandbox, type SandboxGenerateKeyResponse as SandboxGenerateKeyResponse };
+
+  export {
+    Batches as Batches,
+    type Batch as Batch,
+    type BatchResult as BatchResult,
+    type BatchResponse as BatchResponse,
+    type BatchListResponse as BatchListResponse,
+    type BatchResultsResponse as BatchResultsResponse,
+    type BatchDeleteResponse as BatchDeleteResponse,
+    type BatchCreateParams as BatchCreateParams,
+    type BatchListParams as BatchListParams,
+    type BatchStartParams as BatchStartParams,
+    type BatchContinueParams as BatchContinueParams,
+    type BatchResultsParams as BatchResultsParams,
+  };
 }
