@@ -109,7 +109,11 @@ import { constructEvent, WebhookSignatureError } from 'vat-sense';
 app.post('/webhooks/vatsense', express.raw({ type: 'application/json' }), async (req, res) => {
   let event;
   try {
-    event = await constructEvent(req.body, req.get('VatSense-Signature'), process.env.VATSENSE_WEBHOOK_SECRET);
+    event = await constructEvent(
+      req.body,
+      req.get('VatSense-Signature'),
+      process.env.VATSENSE_WEBHOOK_SECRET,
+    );
   } catch (err) {
     if (err instanceof WebhookSignatureError) return res.sendStatus(400);
     throw err;
@@ -263,7 +267,7 @@ await client.validate.check({ vat_number: 'GB288305674' }, { timeout: 5 * 1000 }
 | `client.rates`     | VAT/GST rate lookups, price calculations |
 | `client.countries` | Country data and province lookups        |
 | `client.currency`  | Exchange rates and currency conversion   |
-| `client.batches`  | Check many VAT numbers in one batch      |
+| `client.batches`   | Check many VAT numbers in one batch      |
 | `client.invoice`   | Create and manage VAT-compliant invoices |
 | `client.usage`     | Check your API usage                     |
 
