@@ -48,6 +48,12 @@ export namespace ValidateCheckResponse {
     company?: Data.ValidationCompany | Data.EoriValidationCompany;
 
     /**
+     * VAT Sense's own reference for this check (beta, only for accounts in the
+     * beta). It is not an official number.
+     */
+    confirmation_number?: string | null;
+
+    /**
      * Official consultation number (only returned when requester_vat_number is
      * provided).
      */
@@ -177,6 +183,17 @@ export interface ValidateCheckParams {
    * only work for EU validations. Cross-region is not supported.
    */
   requester_vat_number?: string;
+
+  /**
+   * Send `true` (or `'1'`) with `requester_vat_number` if you would rather have an
+   * answer than wait for a consultation number. When VIES cannot answer for the
+   * number's country and that country has a national register fallback, the answer
+   * comes from the register with no `consultation_number`, instead of the `412`. If
+   * VIES cannot check your own `requester_vat_number`, the number is checked without
+   * it, again with no `consultation_number`. Leave it out if you need the
+   * consultation number as proof of the check.
+   */
+  consultation_optional?: boolean | '1' | 'true';
 
   /**
    * The VAT number to validate. Must include the leading 2-character country code

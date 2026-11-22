@@ -66,6 +66,67 @@ console.log(response.data.consultation_number);
 
 > **Note:** GB requester numbers only work for GB validations, and EU requester numbers only work for EU validations. Cross-region requests are not supported.
 
+If you would rather have an answer than wait for a consultation number when VIES is down, send `consultation_optional: true`. Where a national register can confirm the number, you get the answer with no `consultation_number` instead of the `412`.
+
+### Check many numbers at once (batches)
+
+A batch checks a list of VAT numbers, as the dashboard's bulk validator does with a file. Batch calls are free and each number checked counts as one request. With a test key the batch is answered from the test numbers and costs nothing.
+
+```js
+const { data: batch } = await client.batches.create({
+  numbers: ['GB288305674', 'FR12345678901'],
+  reference: 'November customers',
+  'Idempotency-Key': 'november-customers',
+});
+
+// Poll, or take the batch.completed webhook instead.
+let status = batch.status;
+while (!['complete', 'paused', 'expired'].includes(status)) {
+  await new Promise((resolve) => setTimeout(resolve, 10_000));
+  status = (await client.batches.retrieve(batch.id)).data.status;
+}
+
+let after = 0;
+while (true) {
+  const { data: page } = await client.batches.results(batch.id, { after, limit: 1000 });
+  for (const row of page.data) console.log(row.vat_number, row.result, row.company_name);
+  if (!page.has_more) break;
+  after = page.next_after!;
+}
+
+const csv = await client.batches.resultsCsv(batch.id);
+```
+
+Send `rows: [{ vat_number, company_name, postcode }]` instead of `numbers` for company matching. A batch can also be paused, continued, completed and, while a draft, deleted.
+
+### Check a webhook's signature
+
+Every webhook event carries a `VatSense-Signature` header. Check it against the raw request body with the endpoint's signing secret before trusting the event:
+
+```js
+import { constructEvent, WebhookSignatureError } from 'vat-sense';
+
+app.post('/webhooks/vatsense', express.raw({ type: 'application/json' }), async (req, res) => {
+  let event;
+  try {
+    event = await constructEvent(
+      req.body,
+      req.get('VatSense-Signature'),
+      process.env.VATSENSE_WEBHOOK_SECRET,
+    );
+  } catch (err) {
+    if (err instanceof WebhookSignatureError) return res.sendStatus(400);
+    throw err;
+  }
+  if (event.type === 'batch.completed') {
+    // ...
+  }
+  res.sendStatus(200);
+});
+```
+
+Events more than 5 minutes old are refused (change it with `{ tolerance }`). During the 24 hours after a secret is rolled, events signed with either secret are accepted. It uses the Web Crypto API, so it works in Node 18+, Deno, Bun and edge runtimes.
+
 ### Find the VAT rate for a country
 
 ```js
@@ -206,6 +267,7 @@ await client.validate.check({ vat_number: 'GB288305674' }, { timeout: 5 * 1000 }
 | `client.rates`     | VAT/GST rate lookups, price calculations |
 | `client.countries` | Country data and province lookups        |
 | `client.currency`  | Exchange rates and currency conversion   |
+| `client.batches`   | Check many VAT numbers in one batch      |
 | `client.invoice`   | Create and manage VAT-compliant invoices |
 | `client.usage`     | Check your API usage                     |
 

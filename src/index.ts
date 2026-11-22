@@ -20,3 +20,11 @@ export {
   PermissionDeniedError,
   UnprocessableEntityError,
 } from './core/error';
+export {
+  SIGNATURE_HEADER,
+  WebhookSignatureError,
+  verifySignature,
+  constructEvent,
+  type VerifyOptions,
+  type WebhookEvent,
+} from './lib/webhooks';

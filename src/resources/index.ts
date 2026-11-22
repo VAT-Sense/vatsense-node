@@ -46,6 +46,20 @@ export {
   type RateDetailsParams,
   type RateFindParams,
 } from './rates';
+export {
+  Batches,
+  type Batch,
+  type BatchResult,
+  type BatchResponse,
+  type BatchListResponse,
+  type BatchResultsResponse,
+  type BatchDeleteResponse,
+  type BatchCreateParams,
+  type BatchListParams,
+  type BatchStartParams,
+  type BatchContinueParams,
+  type BatchResultsParams,
+} from './batches';
 export { Sandbox, type SandboxGenerateKeyResponse } from './sandbox';
 export { Usage, type UsageRetrieveResponse } from './usage';
 export { Validate, type ValidateCheckResponse, type ValidateCheckParams } from './validate';
